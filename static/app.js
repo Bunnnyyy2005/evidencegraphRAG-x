@@ -1,34 +1,22 @@
 const $ = s => document.querySelector(s);
 const node = (tag, text, cls) => { const e = document.createElement(tag); if(text!==undefined)e.textContent=text;if(cls)e.className=cls;return e; };
-function headers(){const token=$('#token').value;return token?{Authorization:`Bearer ${token}`}:{}}
+function headers(){return {}}
 async function api(url,options={}){const r=await fetch(url,{...options,headers:{...headers(),...options.headers}});if(!r.ok){let message=await r.text();throw Error(`${r.status}: ${message}`)}return r.json()}
-const TOKEN_STORAGE = 'evidencegraph-x-access-token';
 const visitDocuments = new Set();
 let documentCatalog = [];
-try { $('#token').value = localStorage.getItem(TOKEN_STORAGE) || ''; } catch (_) {}
-function saveToken() {
-  const token = $('#token').value.trim();
-  $('#token').value = token;
-  try { if (token) localStorage.setItem(TOKEN_STORAGE, token); else localStorage.removeItem(TOKEN_STORAGE); }
-  catch (_) { $('#access-status').textContent = 'Browser storage unavailable; token works for this visit.'; return; }
-  $('#access-status').textContent = token ? 'Access token saved on this browser.' : 'Enter the access token once if required.';
-}
+// Remove access tokens saved by earlier dashboard versions.
+try { localStorage.removeItem('evidencegraph-x-access-token'); } catch (_) {}
 function clearVisit() {
   visitDocuments.clear(); documentCatalog = [];
   $('#documents').replaceChildren(node('p','No documents in this visit. Upload a PDF to begin.','muted'));
   $('#result').hidden = true; $('#question').value = ''; $('#pdf').value = '';
   $('#upload-status').textContent = ''; $('#query-status').textContent = '';
 }
-$('#forget-token').onclick = () => { $('#token').value = ''; saveToken(); $('#access-settings').open = true; };
 $('#clear-documents').onclick = clearVisit;
 window.addEventListener('pagehide', clearVisit);
 window.addEventListener('pageshow', event => { if (event.persisted) clearVisit(); });
-$('#access-status').textContent = $('#token').value ? 'Access token saved on this browser.' : 'Enter the access token once if required.';
-$('#access-settings').open = !$('#token').value;
 let polling=false;
 async function refresh(){if(!visitDocuments.size){$('#documents').replaceChildren(node('p','No documents in this visit. Upload a PDF to begin.','muted'));return;}if(polling)return;polling=true;try{const docs=await api('/documents');documentCatalog=docs.filter(d=>visitDocuments.has(d.id));const selected=new Set([...document.querySelectorAll('.doc-select:checked')].map(e=>e.value));$('#documents').replaceChildren();for(const d of documentCatalog){const card=node('div',undefined,'doc');const label=node('label');const check=node('input');check.type='checkbox';check.className='doc-select';check.value=d.id;check.checked=selected.has(d.id);label.append(check,document.createTextNode(d.name));card.append(label,node('p',`${d.stage}${d.chunks?` · ${d.chunks} chunks`:''}`,d.searchable?'ready':'muted'));if(d.error)card.append(node('p',d.error,'error'));if(d.searchable&&d.stage!=='Graph ready'){const resume=node('button','Resume graph');resume.type='button';resume.disabled=['Graph extraction','Searchable — graph queued'].includes(d.stage);resume.onclick=async()=>{resume.disabled=true;try{const result=await api(`/document/${d.id}/resume-graph`,{method:'POST'});$('#upload-status').textContent=`${d.name}: ${result.message}`;await refresh()}catch(err){$('#upload-status').textContent=err.message;resume.disabled=false}};card.append(resume);}$('#documents').append(card)}}catch(e){$('#upload-status').textContent=e.message}finally{polling=false}}
-$('#token').addEventListener('change',()=>{saveToken();refresh()});
-$('#token').addEventListener('input',saveToken);
 $('#upload').onsubmit=async e=>{e.preventDefault();const data=new FormData();data.append('file',$('#pdf').files[0]);$('#upload-status').textContent='Uploading…';try{const d=await api('/upload',{method:'POST',body:data});visitDocuments.add(d.id);$('#upload-status').textContent=`${d.name}: ${d.stage}`;await refresh();for(const check of document.querySelectorAll('.doc-select'))if(check.value===d.id)check.checked=true}catch(err){$('#upload-status').textContent=err.message}};
 for(const b of document.querySelectorAll('#samples button'))b.onclick=()=>{$('#question').value=b.textContent;$('#question').focus()};
 $('#ask').onsubmit=async e=>{e.preventDefault();
