@@ -1,0 +1,14 @@
+services:
+  app:
+    build: .
+    env_file: .env
+    environment:
+      DATA_DIR: /app/data
+      PORT: 7860
+    ports:
+      - "127.0.0.1:7860:7860"
+    volumes:
+      - evidence-data:/app/data
+    restart: unless-stopped
+volumes:
+  evidence-data:

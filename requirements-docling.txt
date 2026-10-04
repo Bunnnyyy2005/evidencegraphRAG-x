@@ -1,0 +1,6 @@
+-r requirements.txt
+--extra-index-url https://download.pytorch.org/whl/cpu
+# Explicit CPU wheels prevent installing CUDA packages on Windows/Linux x86.
+torch==2.14.1+cpu; platform_machine == "x86_64" or platform_machine == "AMD64"
+torchvision==0.29.1+cpu; platform_machine == "x86_64" or platform_machine == "AMD64"
+docling==2.132.0

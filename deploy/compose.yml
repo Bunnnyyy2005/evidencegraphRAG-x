@@ -1,0 +1,30 @@
+# Run from project root: docker compose --env-file .env -f deploy/compose.yml up -d --build
+services:
+  app:
+    build:
+      context: ..
+    env_file: ../.env
+    environment:
+      DATA_DIR: /app/data
+      PORT: 7860
+    volumes:
+      - evidence-data:/app/data
+    restart: unless-stopped
+  proxy:
+    image: caddy:2
+    environment:
+      PUBLIC_HOST: ${PUBLIC_HOST:?Set PUBLIC_HOST in the project .env}
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    depends_on:
+      - app
+    restart: unless-stopped
+volumes:
+  evidence-data:
+  caddy-data:
+  caddy-config:

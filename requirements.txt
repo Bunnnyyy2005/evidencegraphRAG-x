@@ -1,0 +1,21 @@
+fastapi==0.142.2
+uvicorn==0.54.0
+pydantic-settings==2.15.0
+python-multipart==0.0.32
+PyMuPDF==1.28.2
+fastembed==0.8.1
+qdrant-client==1.19.1
+rank-bm25==0.2.2
+neo4j==6.3.1
+networkx==3.7
+scipy==1.18.1
+flashrank==0.2.10
+langgraph==1.2.12
+httpx[socks]==0.28.1
+redis==8.1.0
+pytest==9.1.1
+
+# Directly imported by the app and evaluator.
+numpy==2.5.3
+pydantic==2.13.5
+truststore==0.10.4; sys_platform == "win32"

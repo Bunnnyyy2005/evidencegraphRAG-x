@@ -1,0 +1,5 @@
+-r requirements.txt
+ragas==0.4.3
+langchain-openai==1.6.7
+# RAGAS imports VertexAI integrations removed in Community 0.4.2.
+langchain-community==0.4.1

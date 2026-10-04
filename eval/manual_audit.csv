@@ -1,0 +1,13 @@
+id,answer_correct,pages_sufficient,citation_supported,hop_label_valid,reviewer,notes
+http-s01,,,,,,PENDING HUMAN AUDIT
+http-m01,,,,,,PENDING HUMAN AUDIT
+quic-s01,,,,,,PENDING HUMAN AUDIT
+quic-m01,,,,,,PENDING HUMAN AUDIT
+airmf-s01,,,,,,PENDING HUMAN AUDIT
+airmf-m01,,,,,,PENDING HUMAN AUDIT
+genai-s01,,,,,,PENDING HUMAN AUDIT
+genai-m01,,,,,,PENDING HUMAN AUDIT
+csf-s01,,,,,,PENDING HUMAN AUDIT
+csf-m01,,,,,,PENDING HUMAN AUDIT
+nasa-s01,,,,,,PENDING HUMAN AUDIT
+nasa-m01,,,,,,PENDING HUMAN AUDIT

@@ -1,0 +1,3 @@
+# Install both optional toolsets. Most users should choose just one of these files.
+-r requirements-eval.txt
+-r requirements-docling.txt

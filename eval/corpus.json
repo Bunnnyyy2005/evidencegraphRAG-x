@@ -1,0 +1,56 @@
+[
+  {
+    "key": "http",
+    "filename": "rfc9110.pdf",
+    "title": "IETF RFC 9110 — HTTP Semantics",
+    "url": "https://www.rfc-editor.org/rfc/rfc9110.pdf",
+    "pages": 194,
+    "why": "Precise method semantics, status codes, normative requirements and cross-references.",
+    "sha256": "60b30efa1048900833d1758440247fe8ac85a3134f2327388dcb24e07d814c89"
+  },
+  {
+    "key": "quic",
+    "filename": "rfc9000.pdf",
+    "title": "IETF RFC 9000 — QUIC",
+    "url": "https://www.rfc-editor.org/rfc/rfc9000.pdf",
+    "pages": 151,
+    "why": "State machines, flow control, packet formats and security constraints.",
+    "sha256": "24f411581702fea968f554264a629a80aa5a03a2a959733063391575256edcc7"
+  },
+  {
+    "key": "airmf",
+    "filename": "NIST.AI.100-1.pdf",
+    "title": "NIST AI Risk Management Framework 1.0",
+    "url": "https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-1.pdf?download=1",
+    "pages": 48,
+    "why": "Governance taxonomy, cross-cutting functions and detailed risk tables.",
+    "sha256": "7576edb531d9848825814ee88e28b1795d3a84b435b4b797d3670eafdc4a89f1"
+  },
+  {
+    "key": "genai",
+    "filename": "NIST.AI.600-1.pdf",
+    "title": "NIST Generative AI Profile",
+    "url": "https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf?download=1",
+    "pages": 64,
+    "why": "Interrelated AI risks and mitigation actions across lengthy tables.",
+    "sha256": "6e73620ab6b64e90ef2c04bf0e0d6246185a2f4b1b13cab0df494496cff89b6a"
+  },
+  {
+    "key": "csf",
+    "filename": "NIST.CSWP.29.pdf",
+    "title": "NIST Cybersecurity Framework 2.0",
+    "url": "https://nvlpubs.nist.gov/nistpubs/CSWP/NIST.CSWP.29.pdf?download=1",
+    "pages": 32,
+    "why": "Function, category and profile relationships with organizational context.",
+    "sha256": "3c31f46fee98cac0c4323453e5109291a213b4de7fef8c058af9bf67f717433c"
+  },
+  {
+    "key": "nasa",
+    "filename": "NASA_Systems_Engineering_Handbook.pdf",
+    "title": "NASA Systems Engineering Handbook Rev 2",
+    "url": "https://www.nasa.gov/wp-content/uploads/2018/09/nasa_systems_engineering_handbook_0.pdf",
+    "pages": 297,
+    "why": "Long engineering handbook with lifecycle processes, diagrams and appendices.",
+    "sha256": "8eeb4887a4dc57a23049da7dd2ed556833cf98e214b240468d987873164ff688"
+  }
+]
