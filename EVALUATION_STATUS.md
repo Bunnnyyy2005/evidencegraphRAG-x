@@ -1,7 +1,5 @@
 # EvidenceGraph-X evaluation results
 
-Results documented on 5 October 2026 from `EvidenceGraph-X_Obtained_Metrics.xlsx`. The tables reproduce the workbook’s Obtained column and supplied evaluation scopes. Scores and shares use a 0–1 scale. Timings use seconds, memory uses MiB and event counts are counts rather than distinct failed questions.
-
 ## Evaluation coverage
 
 The workbook reports a 120-question run, retrieval measurements over 96 answerable questions, abstention measurements over 24 unanswerable questions, 50 RAGAS-judged questions, 96 citation-ID checks, 96 verifier checks and 100 human-audited labels. This does not imply that all 120 labels were audited.
