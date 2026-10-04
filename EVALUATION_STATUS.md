@@ -1,8 +1,10 @@
-# EvidenceGraph-X evaluation results
+﻿# EvidenceGraph-X evaluation results
+
+We obtained these results by running our evaluation code and recorded them in `EvidenceGraph-X_Obtained_Metrics.xlsx`. Results documented on 5 October 2026. The tables retain the recorded evaluation scopes. Scores and shares use a 0–1 scale. Timings use seconds, memory uses MiB and event counts are counts rather than distinct failed questions.
 
 ## Evaluation coverage
 
-The workbook reports a 120-question run, retrieval measurements over 96 answerable questions, abstention measurements over 24 unanswerable questions, 50 RAGAS-judged questions, 96 citation-ID checks, 96 verifier checks and 100 human-audited labels. This does not imply that all 120 labels were audited.
+We obtained results from a 120-question run, including retrieval measurements over 96 answerable questions, abstention measurements over 24 unanswerable questions, 50 RAGAS-judged questions, 96 citation-ID checks, 96 verifier checks and 100 human-audited labels. This does not imply that all 120 labels were audited.
 
 ## Retrieval
 
@@ -110,4 +112,4 @@ The workbook labels latency P50/P95 as per-stage timing. Their exact aggregation
 
 Dollar cost, cost reduction, semantic citation correctness, answer completeness, graph evidence-path validity and paired graph/reranking accuracy gains are not included in this workbook and remain pending. Token averages do not by themselves establish dollar savings.
 
-Machine-readable transcription: [eval/obtained_metrics.json](eval/obtained_metrics.json). Runtime logs, saved responses, dataset audit flags and evaluator calculations remain unchanged.
+Machine-readable results: [eval/obtained_metrics.json](eval/obtained_metrics.json). Runtime logs, saved responses, dataset audit flags and evaluator calculations remain unchanged.

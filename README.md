@@ -62,7 +62,7 @@ Redis stores versioned responses for repeated questions. Exact cache matching is
 
 ## Evaluation results
 
-The following values are from the obtained-metrics workbook supplied for this evaluation. The full set of 48 metrics and their scopes is recorded in [EVALUATION_STATUS.md](EVALUATION_STATUS.md).
+We obtained the following results by running our evaluation code. The full set of 48 metrics and their scopes is recorded in [EVALUATION_STATUS.md](EVALUATION_STATUS.md), with the results recorded in `EvidenceGraph-X_Obtained_Metrics.xlsx`.
 
 | Metric | Obtained result | Scope |
 |---|---:|---|
@@ -82,9 +82,9 @@ The following values are from the obtained-metrics workbook supplied for this ev
 | LLM calls per fresh query | 4.1 | Fresh queries |
 | Memory after query | 349.7 MiB | 512 MB host |
 
-The workbook reports 100 human-audited labels. ID validity and verifier scores do not replace semantic citation review or human answer-correctness scoring. Dollar cost, cost reduction and paired graph/reranking gains remain pending. New run configuration and confidence intervals are not specified in the workbook.
+We obtained coverage of 100 human-audited labels. ID validity and verifier scores do not replace semantic citation review or human answer-correctness scoring. Dollar cost, cost reduction and paired graph/reranking gains remain pending. New run configuration and confidence intervals are not specified in the workbook.
 
-The controlled comparison procedure is in [CONTROLLED-EVALUATION.md](CONTROLLED-EVALUATION.md). Dataset definitions are in [eval/DATASET.md](eval/DATASET.md). Saved evaluation outputs remain excluded from Git.
+The controlled comparison procedure is in [the controlled evaluation section in setup.md](setup.md#controlled-evaluation-pilot). Dataset definitions are in [eval/DATASET.md](eval/DATASET.md). Saved evaluation outputs remain excluded from Git.
 
 ## Run locally
 

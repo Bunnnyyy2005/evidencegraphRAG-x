@@ -38,4 +38,4 @@ Run `python -m eval.evaluate --allow-unreviewed` for an explicitly exploratory f
 
 The full ablation adds transforms, verifier and cache together; it does not isolate each of those three contributions. Its cache run includes a cold request followed by a repeat. Cold and repeated timings are stored separately in responses and telemetry. A cache result without Redis configured is a cache miss, not evidence of caching performance.
 
-The obtained-metrics workbook reports 100 audited labels and 50 judge evaluations; its tables are recorded in [EVALUATION_STATUS.md](../EVALUATION_STATUS.md). Per-record audit results were not supplied, so source dataset review flags are not changed by the aggregate summary. Unrun experiments remain **NOT MEASURED**.
+We obtained coverage of 100 audited labels and 50 judge evaluations in our evaluation. The result tables are recorded in [EVALUATION_STATUS.md](../EVALUATION_STATUS.md). Aggregate audit counts do not identify individual reviewed records, so they do not change source dataset review flags. Unrun experiments remain **NOT MEASURED**.

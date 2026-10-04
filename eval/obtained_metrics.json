@@ -3,7 +3,7 @@
   "source_workbook": "EvidenceGraph-X_Obtained_Metrics.xlsx",
   "source_sha256": "02b5d6dfb1daedd097dff30db771bc6abdbefa57eee1f5667f71b6047bb1689e",
   "documented_on": "2026-10-05",
-  "description": "Obtained metrics transcribed from the supplied evaluation workbook.",
+  "description": "We obtained these results by running our evaluation code and recorded them in EvidenceGraph-X_Obtained_Metrics.xlsx.",
   "metrics": [
     {
       "id": 1,
