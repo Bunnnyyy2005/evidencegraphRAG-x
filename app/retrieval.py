@@ -1,4 +1,5 @@
 """CPU dense embeddings, raw/contextual Qdrant vectors, BM25, RRF and cross-encoder."""
+import json
 import threading
 import uuid
 from concurrent.futures import ThreadPoolExecutor
@@ -39,7 +40,7 @@ class Retrieval:
 
     def embed(self, texts: list[str]) -> list[list[float]]:
         with self.model_lock:
-            return [v.tolist() for v in self.embedder.embed(texts, batch_size=32)]
+            return [v.tolist() for v in self.embedder.embed(texts, batch_size=settings().embedding_batch_size)]
 
     @cached_property
     def client(self):
@@ -50,8 +51,8 @@ class Retrieval:
         cfg = settings()
         fingerprint = digest(f'{cfg.collection}|{cfg.embedding_model}|{cfg.chunk_words}|v1')
         self.store.assert_index_config(fingerprint)
-        for offset in range(0, len(chunks), 32):
-            batch = chunks[offset:offset+32]
+        for offset in range(0, len(chunks), cfg.embedding_batch_size):
+            batch = chunks[offset:offset+cfg.embedding_batch_size]
             raw = self.embed([c['text'] for c in batch])
             contextual = self.embed([c['context'] for c in batch])
             progress()
@@ -93,33 +94,38 @@ class Retrieval:
             self._indexed_collection = cfg.collection
 
     def restore_catalog(self) -> int:
-        """Rebuild ephemeral catalog/BM25 from committed Qdrant payloads on free hosts."""
+        """Restore payloads in bounded batches; keep only document metadata in RAM."""
         if not settings().qdrant_url or self.store.documents():
             return 0
         cfg = settings()
+        expected = digest(f'{cfg.collection}|{cfg.embedding_model}|{cfg.chunk_words}|v1')
         with self.lock:
             if not self.client.collection_exists(cfg.collection):
                 return 0
             self.ensure_payload_indexes()
-            offset, grouped = None, {}
+            offset, documents = None, {}
             while True:
-                points, offset = self.client.scroll(cfg.collection, offset=offset, limit=256,
+                points, offset = self.client.scroll(cfg.collection, offset=offset, limit=32,
                     scroll_filter=models.Filter(must=[models.FieldCondition(key='published',
                         match=models.MatchValue(value=True))]), with_payload=True, with_vectors=False)
                 for point in points:
                     chunk = point.payload
-                    expected = digest(f'{cfg.collection}|{cfg.embedding_model}|{cfg.chunk_words}|v1')
                     if chunk.get('index_fingerprint') != expected:
                         raise ValueError('Cloud collection uses a different index configuration; choose a new collection.')
-                    grouped.setdefault(chunk['document_id'], []).append(chunk)
+                    documents[chunk['document_id']] = chunk['document_name']
+                with self.store.db() as db:
+                    db.executemany('INSERT OR REPLACE INTO chunks VALUES (?,?,?)',
+                        ((p.payload['chunk_id'], p.payload['document_id'], json.dumps(p.payload)) for p in points))
+                del points
                 if offset is None:
                     break
-        for doc_id, chunks in grouped.items():
-            self.store.save_chunks(doc_id, chunks)
-            self.store.save_doc({'id':doc_id, 'name':chunks[0]['document_name'], 'searchable':True,
-                'stage':'Searchable — restored from Qdrant', 'chunks':len(chunks),
+        for doc_id, name in documents.items():
+            with self.store.db() as db:
+                count = db.execute('SELECT count(*) FROM chunks WHERE doc=?', (doc_id,)).fetchone()[0]
+            self.store.save_doc({'id':doc_id, 'name':name, 'searchable':True,
+                'stage':'Searchable — restored from Qdrant', 'chunks':count,
                 'revision':'restored', 'graph_revision':'restored', 'original_pdf_available':False})
-        return len(grouped)
+        return len(documents)
 
     def dense(self, query: str, document_ids: list[str], contextual: bool = True, k: int | None = None,
               metadata: dict | None = None) -> list[dict]:

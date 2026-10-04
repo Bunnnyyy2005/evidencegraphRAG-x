@@ -1,7 +1,7 @@
 const $ = s => document.querySelector(s);
 const node = (tag, text, cls) => { const e = document.createElement(tag); if(text!==undefined)e.textContent=text;if(cls)e.className=cls;return e; };
 function headers(){return {}}
-async function api(url,options={}){const r=await fetch(url,{...options,headers:{...headers(),...options.headers}});if(!r.ok){let message=await r.text();throw Error(`${r.status}: ${message}`)}return r.json()}
+async function api(url,options={}){const r=await fetch(url,{...options,headers:{...headers(),...options.headers}});if(!r.ok){let message;if([502,503,504].includes(r.status)){message='Server temporarily unavailable or restarting. Check Render Events before retrying.'}else if((r.headers.get('content-type')||'').includes('application/json')){const body=await r.json();message=typeof body.detail==='string'?body.detail:JSON.stringify(body).slice(0,300)}else{message=(await r.text()).replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').trim().slice(0,300)||'Request failed'}throw Error(`${r.status}: ${message}`)}return r.json()}
 const visitDocuments = new Set();
 let documentCatalog = [];
 // Remove access tokens saved by earlier dashboard versions.

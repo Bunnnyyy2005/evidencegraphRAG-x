@@ -26,6 +26,7 @@ class Settings(BaseSettings):
     collection: str = 'evidencegraph_x_v1'
     embedding_model: str = 'BAAI/bge-small-en-v1.5'
     embedding_threads: int = 2
+    embedding_batch_size: int = Field(4, ge=1, le=32)
     neo4j_uri: str = ''
     neo4j_user: str = 'neo4j'
     neo4j_password: str = ''
