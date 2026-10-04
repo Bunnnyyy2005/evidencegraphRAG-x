@@ -21,3 +21,4 @@ data_*/
 upload/
 *.zip
 Neo4j*.txt
+.cleanup-backup/

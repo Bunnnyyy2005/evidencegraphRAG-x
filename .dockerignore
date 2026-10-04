@@ -11,3 +11,13 @@ data
 *.ses
 eval/results
 upload
+
+data_*
+.pytest-tmp*
+*.zip
+.cleanup-backup
+GRAPH-RECOVERY.txt
+START-HERE.txt
+READ-ME.txt
+apply_fixes.py
+pause_graph.py
