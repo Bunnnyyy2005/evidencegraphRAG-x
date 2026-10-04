@@ -88,3 +88,15 @@ evidencegraph-x/
 | `static/index.html` | Upload/query/evidence UI layout | Browser, app.js/styles.css | Served at GET / |
 | `static/styles.css` | Responsive dark UI styling | Browser CSS | Loaded by index.html |
 | `tests/test_core.py` | 24 offline unit/API/contract tests | pytest, core runtime | pytest |
+
+## Evaluation documentation additions
+
+| File | Purpose |
+|---|---|
+| `EVALUATION_STATUS.md` | Recorded results, scope and pending measurements |
+| `METRIC_TARGETS.md` | All 48 observed-versus-target comparisons from the supplied workbook |
+| `eval/metric_targets.json` | Typed planning targets with source hash; not runtime results |
+
+## Separate user-reported run
+
+The user reports obtaining the spreadsheet values with separate codes. [USER_REPORTED_RESULTS.md](USER_REPORTED_RESULTS.md) records all 48 values with unverified status and unspecified run scope. Historical validation records, logs and test counts are preserved.

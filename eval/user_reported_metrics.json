@@ -1,0 +1,347 @@
+{
+  "schema_version": 1,
+  "status": "user_reported_unverified",
+  "reported_date": "2026-10-05",
+  "source_workbook": "EvidenceGraph-X_Target_Metrics(1).xlsx",
+  "source_sha256": "c696f66a57982a039850c430248dadfd406b2668323017895e62086004ed26d2",
+  "source_column": "Good target",
+  "provenance": "User states these values were obtained using separate codes. The supplied workbook still labels the column as targets and describes its values as estimates. No new run logs, per-question outputs, configuration or scope have been provided.",
+  "metrics": [
+    {
+      "metric": "Recall@5",
+      "category": "Retrieval",
+      "value": 0.8,
+      "status": "user_reported_unverified",
+      "evaluation_scope": null
+    },
+    {
+      "metric": "Recall@10",
+      "category": "Retrieval",
+      "value": 0.9,
+      "status": "user_reported_unverified",
+      "evaluation_scope": null
+    },
+    {
+      "metric": "Hit@5",
+      "category": "Retrieval",
+      "value": 0.88,
+      "status": "user_reported_unverified",
+      "evaluation_scope": null
+    },
+    {
+      "metric": "Hit@10",
+      "category": "Retrieval",
+      "value": 0.95,
+      "status": "user_reported_unverified",
+      "evaluation_scope": null
+    },
+    {
+      "metric": "MRR",
+      "category": "Retrieval",
+      "value": 0.74,
+      "status": "user_reported_unverified",
+      "evaluation_scope": null
+    },
+    {
+      "metric": "nDCG@10",
+      "category": "Retrieval",
+      "value": 0.76,
+      "status": "user_reported_unverified",
+      "evaluation_scope": null
+    },
+    {
+      "metric": "Abstention accuracy",
+      "category": "Answer quality",
+      "value": 0.85,
+      "status": "user_reported_unverified",
+      "evaluation_scope": null
+    },
+    {
+      "metric": "Citation-ID precision",
+      "category": "Answer quality",
+      "value": 1.0,
+      "status": "user_reported_unverified",
+      "evaluation_scope": null
+    },
+    {
+      "metric": "Verifier claim-support rate",
+      "category": "Answer quality",
+      "value": 0.92,
+      "status": "user_reported_unverified",
+      "evaluation_scope": null
+    },
+    {
+      "metric": "RAGAS faithfulness",
+      "category": "Answer quality",
+      "value": 0.92,
+      "status": "user_reported_unverified",
+      "evaluation_scope": null
+    },
+    {
+      "metric": "RAGAS answer relevancy",
+      "category": "Answer quality",
+      "value": 0.9,
+      "status": "user_reported_unverified",
+      "evaluation_scope": null
+    },
+    {
+      "metric": "RAGAS context precision",
+      "category": "Answer quality",
+      "value": 0.75,
+      "status": "user_reported_unverified",
+      "evaluation_scope": null
+    },
+    {
+      "metric": "RAGAS context recall",
+      "category": "Answer quality",
+      "value": 0.9,
+      "status": "user_reported_unverified",
+      "evaluation_scope": null
+    },
+    {
+      "metric": "Latency mean (s)",
+      "category": "Latency (end-to-end)",
+      "value": 4.5,
+      "status": "user_reported_unverified",
+      "evaluation_scope": null
+    },
+    {
+      "metric": "Latency P50 (s)",
+      "category": "Latency (end-to-end)",
+      "value": 3.5,
+      "status": "user_reported_unverified",
+      "evaluation_scope": null
+    },
+    {
+      "metric": "Latency P95 (s)",
+      "category": "Latency (end-to-end)",
+      "value": 8.0,
+      "status": "user_reported_unverified",
+      "evaluation_scope": null
+    },
+    {
+      "metric": "Deployed multi-hop graph query, total (s)",
+      "category": "Latency (end-to-end)",
+      "value": 7.0,
+      "status": "user_reported_unverified",
+      "evaluation_scope": null
+    },
+    {
+      "metric": "Deployed multi-hop graph stage (s)",
+      "category": "Latency (end-to-end)",
+      "value": 1.5,
+      "status": "user_reported_unverified",
+      "evaluation_scope": null
+    },
+    {
+      "metric": "Cache hit time (s)",
+      "category": "Latency (end-to-end)",
+      "value": 0.05,
+      "status": "user_reported_unverified",
+      "evaluation_scope": null
+    },
+    {
+      "metric": "Retrieval P50 (s)",
+      "category": "Pipeline stage",
+      "value": 0.5,
+      "status": "user_reported_unverified",
+      "evaluation_scope": null
+    },
+    {
+      "metric": "Retrieval P95 (s)",
+      "category": "Pipeline stage",
+      "value": 1.2,
+      "status": "user_reported_unverified",
+      "evaluation_scope": null
+    },
+    {
+      "metric": "Graph P50 (s)",
+      "category": "Pipeline stage",
+      "value": 1.5,
+      "status": "user_reported_unverified",
+      "evaluation_scope": null
+    },
+    {
+      "metric": "Graph P95 (s)",
+      "category": "Pipeline stage",
+      "value": 4.0,
+      "status": "user_reported_unverified",
+      "evaluation_scope": null
+    },
+    {
+      "metric": "Rerank P50 (s)",
+      "category": "Pipeline stage",
+      "value": 0.14,
+      "status": "user_reported_unverified",
+      "evaluation_scope": null
+    },
+    {
+      "metric": "Rerank P95 (s)",
+      "category": "Pipeline stage",
+      "value": 0.3,
+      "status": "user_reported_unverified",
+      "evaluation_scope": null
+    },
+    {
+      "metric": "Generation P50 (s)",
+      "category": "Pipeline stage",
+      "value": 1.5,
+      "status": "user_reported_unverified",
+      "evaluation_scope": null
+    },
+    {
+      "metric": "Generation P95 (s)",
+      "category": "Pipeline stage",
+      "value": 2.5,
+      "status": "user_reported_unverified",
+      "evaluation_scope": null
+    },
+    {
+      "metric": "Verification P50 (s)",
+      "category": "Pipeline stage",
+      "value": 2.0,
+      "status": "user_reported_unverified",
+      "evaluation_scope": null
+    },
+    {
+      "metric": "Verification P95 (s)",
+      "category": "Pipeline stage",
+      "value": 4.0,
+      "status": "user_reported_unverified",
+      "evaluation_scope": null
+    },
+    {
+      "metric": "Cache hit rate",
+      "category": "Cache",
+      "value": 0.3,
+      "status": "user_reported_unverified",
+      "evaluation_scope": null
+    },
+    {
+      "metric": "Input tokens per query",
+      "category": "Cost / tokens",
+      "value": 2800.0,
+      "status": "user_reported_unverified",
+      "evaluation_scope": null
+    },
+    {
+      "metric": "Output tokens per query",
+      "category": "Cost / tokens",
+      "value": 600.0,
+      "status": "user_reported_unverified",
+      "evaluation_scope": null
+    },
+    {
+      "metric": "LLM calls per query",
+      "category": "Cost / tokens",
+      "value": 4.0,
+      "status": "user_reported_unverified",
+      "evaluation_scope": null
+    },
+    {
+      "metric": "Retries recorded",
+      "category": "Cost / tokens",
+      "value": 0.0,
+      "status": "user_reported_unverified",
+      "evaluation_scope": null
+    },
+    {
+      "metric": "Usage records fully complete (share)",
+      "category": "Telemetry",
+      "value": 1.0,
+      "status": "user_reported_unverified",
+      "evaluation_scope": null
+    },
+    {
+      "metric": "Questions with telemetry (share)",
+      "category": "Telemetry",
+      "value": 1.0,
+      "status": "user_reported_unverified",
+      "evaluation_scope": null
+    },
+    {
+      "metric": "Rate-limit events: evidence grading",
+      "category": "Reliability",
+      "value": 5.0,
+      "status": "user_reported_unverified",
+      "evaluation_scope": null
+    },
+    {
+      "metric": "Rate-limit events: generation",
+      "category": "Reliability",
+      "value": 3.0,
+      "status": "user_reported_unverified",
+      "evaluation_scope": null
+    },
+    {
+      "metric": "Rate-limit events: graph traversal",
+      "category": "Reliability",
+      "value": 3.0,
+      "status": "user_reported_unverified",
+      "evaluation_scope": null
+    },
+    {
+      "metric": "Missing-SciPy errors",
+      "category": "Reliability",
+      "value": 0.0,
+      "status": "user_reported_unverified",
+      "evaluation_scope": null
+    },
+    {
+      "metric": "Rate-limit events: retrieval",
+      "category": "Reliability",
+      "value": 1.0,
+      "status": "user_reported_unverified",
+      "evaluation_scope": null
+    },
+    {
+      "metric": "Failure events: verification",
+      "category": "Reliability",
+      "value": 0.0,
+      "status": "user_reported_unverified",
+      "evaluation_scope": null
+    },
+    {
+      "metric": "Runtime errors in final summary",
+      "category": "Reliability",
+      "value": 0.0,
+      "status": "user_reported_unverified",
+      "evaluation_scope": null
+    },
+    {
+      "metric": "Memory after query (MiB)",
+      "category": "Resources",
+      "value": 350.0,
+      "status": "user_reported_unverified",
+      "evaluation_scope": null
+    },
+    {
+      "metric": "Questions with RAGAS judging (n)",
+      "category": "Eval coverage",
+      "value": 50.0,
+      "status": "user_reported_unverified",
+      "evaluation_scope": null
+    },
+    {
+      "metric": "Questions with citation-ID check (n)",
+      "category": "Eval coverage",
+      "value": 96.0,
+      "status": "user_reported_unverified",
+      "evaluation_scope": null
+    },
+    {
+      "metric": "Questions with verifier check (n)",
+      "category": "Eval coverage",
+      "value": 96.0,
+      "status": "user_reported_unverified",
+      "evaluation_scope": null
+    },
+    {
+      "metric": "Human-audited labels (n)",
+      "category": "Eval coverage",
+      "value": 100.0,
+      "status": "user_reported_unverified",
+      "evaluation_scope": null
+    }
+  ]
+}

@@ -1,5 +1,9 @@
 # EvidenceGraph-X evaluation status
 
+## Latest user-reported run
+
+The user reports a separate run on 5 October 2026. Its 48 supplied values are in [USER_REPORTED_RESULTS.md](USER_REPORTED_RESULTS.md), labeled user-reported and unverified. New run logs and scope were not supplied. The following observations are from the earlier logged run and have not been overwritten.
+
 Recorded: 2026-10-04. Source: outputs provided by the user in this conversation. The new controlled pilot's final results have not been provided. All results remain exploratory; human label audit is pending.
 
 ## Observed results
@@ -51,3 +55,7 @@ RAGAS sampling covers successfully generated answerable responses only; it exclu
 | Cost reduction | NOT MEASURED | Requires matched baseline, complete usage and quality comparison |
 
 Deployment and graph execution smoke tests succeeded. This establishes that tested features execute; it does not establish production readiness or maximum accuracy. Missing values have not been replaced with invented scores.
+
+## Planned thresholds
+
+The 48 spreadsheet targets are documented alongside their observations in [METRIC_TARGETS.md](METRIC_TARGETS.md). These values are unverified goals. They do not replace the measurements above or establish completion of the pending evaluations.

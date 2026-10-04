@@ -349,3 +349,11 @@ python -m pip check
 ```
 
 Then set `PARSER=docling` in `.env` and restart. Explicit CPU Torch/TorchVision wheels avoid CUDA dependencies on Windows/Linux x86. Docling still adds substantial dependencies and layout model downloads. OCR is disabled in this adapter. Docling failure falls back to PyMuPDF and is recorded. It is optional because the core application must remain usable on limited hardware. This adapter's runtime status is stated honestly in `VALIDATION.md`.
+
+## Target values for future measurements
+
+See [METRIC_TARGETS.md](METRIC_TARGETS.md) for all 48 supplied goals and their recorded observations. These are planning inputs, not test outcomes. Existing validation records and evaluator outputs retain their measured values.
+
+## Separate user-reported run
+
+The user reports obtaining the spreadsheet values with separate codes. [USER_REPORTED_RESULTS.md](USER_REPORTED_RESULTS.md) records all 48 values with unverified status and unspecified run scope. Historical validation records, logs and test counts are preserved.

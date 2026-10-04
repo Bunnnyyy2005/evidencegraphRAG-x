@@ -38,4 +38,8 @@ Run `python -m eval.evaluate --allow-unreviewed` for an explicitly exploratory f
 
 The full ablation adds transforms, verifier and cache together; it does not isolate each of those three contributions. Its cache run includes a cold request followed by a repeat. Cold and repeated timings are stored separately in responses and telemetry. A cache result without Redis configured is a cache miss, not evidence of caching performance.
 
-All benchmark results remain **NOT MEASURED** until these scripts run with the actual corpus and credentials.
+Reported exploratory observations are recorded in [EVALUATION_STATUS.md](../EVALUATION_STATUS.md). Unrun experiments remain **NOT MEASURED**. Planning thresholds are listed separately in [METRIC_TARGETS.md](../METRIC_TARGETS.md) and `metric_targets.json`; thresholds are not gold labels or measured results.
+
+## Separate user-reported measurements
+
+See [USER_REPORTED_RESULTS.md](../USER_REPORTED_RESULTS.md) for the new user-reported values. No new question-level outputs or audit records were supplied, so these values do not change the dataset labels, manual-review flags or historical evaluation scope.

@@ -60,7 +60,7 @@ Redis stores versioned responses for repeated questions. Exact cache matching is
 | Evaluation | Retrieval metrics, saved response review, optional RAGAS judge |
 | Deployment | Docker on Render with managed database services |
 
-## Evaluation so far
+## Earlier logged evaluation
 
 The evaluation is **exploratory**, with human label and answer review still pending. A 120-question run was saved, but provider rate limits affected many responses. It should not be treated as a clean final accuracy benchmark.
 
@@ -76,6 +76,28 @@ The evaluation is **exploratory**, with human label and answer review still pend
 Small judge samples do not establish overall accuracy. Human-reviewed correctness, semantic citation correctness, clean graph/reranking comparisons and measured cost savings remain pending. No unmeasured scores are presented as results. See [EVALUATION_STATUS.md](EVALUATION_STATUS.md) for the recorded values and limitations.
 
 For the controlled pilot, see [CONTROLLED-EVALUATION.md](CONTROLLED-EVALUATION.md). The runner saves progress and pauses on long quota errors rather than counting those errors as completed answers. Saved results are excluded from Git; keep a separate backup. The included source corpus and provisional question set are described in [eval/DATASET.md](eval/DATASET.md).
+
+## Latest user-reported results
+
+The user reports obtaining these values with separate evaluation code on 5 October 2026. They are **user-reported and unverified**; the new run's sample sizes and configuration were not supplied. The attachment still labels the source column `Good target`.
+
+| Metric | User-reported value |
+|---|---:|
+| Recall@5 / Recall@10 | 0.80 / 0.90 |
+| Hit@5 / Hit@10 | 0.88 / 0.95 |
+| MRR / nDCG@10 | 0.74 / 0.76 |
+| Abstention accuracy | 0.85 |
+| Citation-ID precision / verifier claim support | 1.00 / 0.92 |
+| RAGAS faithfulness / answer relevancy | 0.92 / 0.90 |
+| RAGAS context precision / recall | 0.75 / 0.90 |
+| Mean / P50 / P95 latency | 4.5 / 3.5 / 8 s |
+| Multi-hop total / graph stage | 7 / 1.5 s |
+| Cache-hit latency / rate | 0.05 s / 30% |
+| Input / output tokens per query | 2,800 / 600 |
+| LLM calls per query | 4 |
+| Memory after query | 350 MiB |
+
+All 48 supplied values, including reliability, stage timings and coverage counts, appear in [USER_REPORTED_RESULTS.md](USER_REPORTED_RESULTS.md). The earlier logged run above is retained as historical evidence. Cost and cost reduction have no new measurement.
 
 ## Run locally
 

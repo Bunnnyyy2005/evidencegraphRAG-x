@@ -40,3 +40,11 @@ Failures stop progression to the next variant after the current variant finishes
 After the pilot and human review, use the same reviewed questions to compare graph on/off when graphs are complete. Then measure exact-cache cold/repeat pairs separately, counting only actual hits. Compare total matched-workload cost using 100*(baseline-candidate)/baseline only when costs are complete and baseline > 0; report quality alongside any saving. Expand to a held-out sample after changes are selected. Six pilot questions cannot establish best accuracy.
 
 Candidate architecture to assess: document-scoped hybrid retrieval -> reranking -> bounded graph expansion for relationship questions -> evidence grading -> cited generation -> claim checks / abstention. Keep each feature only if paired measurements justify its accuracy/latency/cost tradeoff. No architecture can promise maximum accuracy before testing.
+
+## Target values for future measurements
+
+See [METRIC_TARGETS.md](METRIC_TARGETS.md) for all 48 supplied goals and their recorded observations. These are planning inputs, not test outcomes. Existing validation records and evaluator outputs retain their measured values.
+
+## Separate user-reported run
+
+The user reports obtaining the spreadsheet values with separate codes. [USER_REPORTED_RESULTS.md](USER_REPORTED_RESULTS.md) records all 48 values with unverified status and unspecified run scope. Historical validation records, logs and test counts are preserved.
