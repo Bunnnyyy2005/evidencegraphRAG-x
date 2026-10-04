@@ -1,0 +1,345 @@
+{
+  "schema_version": 1,
+  "source_workbook": "EvidenceGraph-X_Obtained_Metrics.xlsx",
+  "source_sha256": "02b5d6dfb1daedd097dff30db771bc6abdbefa57eee1f5667f71b6047bb1689e",
+  "documented_on": "2026-10-05",
+  "description": "Obtained metrics transcribed from the supplied evaluation workbook.",
+  "metrics": [
+    {
+      "id": 1,
+      "category": "Retrieval",
+      "metric": "Recall@5",
+      "value": 0.7934,
+      "scope": "96 answerable questions"
+    },
+    {
+      "id": 2,
+      "category": "Retrieval",
+      "metric": "Recall@10",
+      "value": 0.8925,
+      "scope": "96 answerable questions"
+    },
+    {
+      "id": 3,
+      "category": "Retrieval",
+      "metric": "Hit@5",
+      "value": 0.8774,
+      "scope": "96 answerable questions"
+    },
+    {
+      "id": 4,
+      "category": "Retrieval",
+      "metric": "Hit@10",
+      "value": 0.9431,
+      "scope": "96 answerable questions"
+    },
+    {
+      "id": 5,
+      "category": "Retrieval",
+      "metric": "MRR",
+      "value": 0.727,
+      "scope": "96 answerable questions"
+    },
+    {
+      "id": 6,
+      "category": "Retrieval",
+      "metric": "nDCG@10",
+      "value": 0.757,
+      "scope": "96 answerable questions"
+    },
+    {
+      "id": 7,
+      "category": "Answer quality",
+      "metric": "Abstention accuracy",
+      "value": 0.8473,
+      "scope": "All 24 unanswerable questions"
+    },
+    {
+      "id": 8,
+      "category": "Answer quality",
+      "metric": "Citation-ID precision",
+      "value": 0.9942,
+      "scope": "All answerable questions (ID validity)"
+    },
+    {
+      "id": 9,
+      "category": "Answer quality",
+      "metric": "Verifier claim-support rate",
+      "value": 0.9226,
+      "scope": "All answerable questions"
+    },
+    {
+      "id": 10,
+      "category": "Answer quality",
+      "metric": "RAGAS faithfulness",
+      "value": 0.903,
+      "scope": "50+ judged questions"
+    },
+    {
+      "id": 11,
+      "category": "Answer quality",
+      "metric": "RAGAS answer relevancy",
+      "value": 0.884,
+      "scope": "50+ judged questions"
+    },
+    {
+      "id": 12,
+      "category": "Answer quality",
+      "metric": "RAGAS context precision",
+      "value": 0.765,
+      "scope": "50+ judged questions"
+    },
+    {
+      "id": 13,
+      "category": "Answer quality",
+      "metric": "RAGAS context recall",
+      "value": 0.893,
+      "scope": "50+ judged questions"
+    },
+    {
+      "id": 14,
+      "category": "Latency (end-to-end)",
+      "metric": "Latency mean (s)",
+      "value": 4.93,
+      "scope": "120-question run"
+    },
+    {
+      "id": 15,
+      "category": "Latency (end-to-end)",
+      "metric": "Latency P50 (s)",
+      "value": 3.57,
+      "scope": "Per-stage timing"
+    },
+    {
+      "id": 16,
+      "category": "Latency (end-to-end)",
+      "metric": "Latency P95 (s)",
+      "value": 8.15,
+      "scope": "Per-stage timing"
+    },
+    {
+      "id": 17,
+      "category": "Latency (end-to-end)",
+      "metric": "Deployed multi-hop graph query, total (s)",
+      "value": 6.55,
+      "scope": "Multi-hop query on the deployed app"
+    },
+    {
+      "id": 18,
+      "category": "Latency (end-to-end)",
+      "metric": "Deployed multi-hop graph stage (s)",
+      "value": 1.39,
+      "scope": "Graph stage of the same query"
+    },
+    {
+      "id": 19,
+      "category": "Latency (end-to-end)",
+      "metric": "Cache hit time (s)",
+      "value": 0.055,
+      "scope": "Exact-cache hit"
+    },
+    {
+      "id": 20,
+      "category": "Pipeline stage",
+      "metric": "Retrieval P50 (s)",
+      "value": 0.503,
+      "scope": "Per-stage timing"
+    },
+    {
+      "id": 21,
+      "category": "Pipeline stage",
+      "metric": "Retrieval P95 (s)",
+      "value": 1.3,
+      "scope": "Per-stage timing"
+    },
+    {
+      "id": 22,
+      "category": "Pipeline stage",
+      "metric": "Graph P50 (s)",
+      "value": 1.41,
+      "scope": "Per-stage timing"
+    },
+    {
+      "id": 23,
+      "category": "Pipeline stage",
+      "metric": "Graph P95 (s)",
+      "value": 3.94,
+      "scope": "Per-stage timing"
+    },
+    {
+      "id": 24,
+      "category": "Pipeline stage",
+      "metric": "Rerank P50 (s)",
+      "value": 0.129,
+      "scope": "Per-stage timing"
+    },
+    {
+      "id": 25,
+      "category": "Pipeline stage",
+      "metric": "Rerank P95 (s)",
+      "value": 0.283,
+      "scope": "Per-stage timing"
+    },
+    {
+      "id": 26,
+      "category": "Pipeline stage",
+      "metric": "Generation P50 (s)",
+      "value": 1.57,
+      "scope": "Per-stage timing"
+    },
+    {
+      "id": 27,
+      "category": "Pipeline stage",
+      "metric": "Generation P95 (s)",
+      "value": 2.67,
+      "scope": "Per-stage timing"
+    },
+    {
+      "id": 28,
+      "category": "Pipeline stage",
+      "metric": "Verification P50 (s)",
+      "value": 2.05,
+      "scope": "Per-stage timing"
+    },
+    {
+      "id": 29,
+      "category": "Pipeline stage",
+      "metric": "Verification P95 (s)",
+      "value": 4.12,
+      "scope": "Per-stage timing"
+    },
+    {
+      "id": 30,
+      "category": "Cache",
+      "metric": "Cache hit rate",
+      "value": 0.2928,
+      "scope": "Realistic repeat-query workload"
+    },
+    {
+      "id": 31,
+      "category": "Cost / tokens",
+      "metric": "Input tokens per query",
+      "value": 2799.36,
+      "scope": "Per fresh query"
+    },
+    {
+      "id": 32,
+      "category": "Cost / tokens",
+      "metric": "Output tokens per query",
+      "value": 599.43,
+      "scope": "Per fresh query"
+    },
+    {
+      "id": 33,
+      "category": "Cost / tokens",
+      "metric": "LLM calls per query",
+      "value": 4.1,
+      "scope": "Per fresh query"
+    },
+    {
+      "id": 34,
+      "category": "Cost / tokens",
+      "metric": "Retries recorded",
+      "value": 0.0,
+      "scope": "120-question run"
+    },
+    {
+      "id": 35,
+      "category": "Telemetry",
+      "metric": "Usage records fully complete (share)",
+      "value": 0.9969,
+      "scope": "All usage records"
+    },
+    {
+      "id": 36,
+      "category": "Telemetry",
+      "metric": "Questions with telemetry (share)",
+      "value": 0.993,
+      "scope": "All questions"
+    },
+    {
+      "id": 37,
+      "category": "Reliability",
+      "metric": "Rate-limit events: evidence grading",
+      "value": 5.0,
+      "scope": "120-question run (event count)"
+    },
+    {
+      "id": 38,
+      "category": "Reliability",
+      "metric": "Rate-limit events: generation",
+      "value": 3.0,
+      "scope": "120-question run (event count)"
+    },
+    {
+      "id": 39,
+      "category": "Reliability",
+      "metric": "Rate-limit events: graph traversal",
+      "value": 3.0,
+      "scope": "120-question run (event count)"
+    },
+    {
+      "id": 40,
+      "category": "Reliability",
+      "metric": "Missing-SciPy errors",
+      "value": 0.0,
+      "scope": "120-question run (event count)"
+    },
+    {
+      "id": 41,
+      "category": "Reliability",
+      "metric": "Rate-limit events: retrieval",
+      "value": 1.0,
+      "scope": "120-question run (event count)"
+    },
+    {
+      "id": 42,
+      "category": "Reliability",
+      "metric": "Failure events: verification",
+      "value": 0.0,
+      "scope": "120-question run (event count)"
+    },
+    {
+      "id": 43,
+      "category": "Reliability",
+      "metric": "Runtime errors in final summary",
+      "value": 0.0,
+      "scope": "120-question run (event count)"
+    },
+    {
+      "id": 44,
+      "category": "Resources",
+      "metric": "Memory after query (MiB)",
+      "value": 349.7,
+      "scope": "After a query, 512 MB host"
+    },
+    {
+      "id": 45,
+      "category": "Eval coverage",
+      "metric": "Questions with RAGAS judging (n)",
+      "value": 50.0,
+      "scope": "Sample size"
+    },
+    {
+      "id": 46,
+      "category": "Eval coverage",
+      "metric": "Questions with citation-ID check (n)",
+      "value": 96.0,
+      "scope": "Sample size"
+    },
+    {
+      "id": 47,
+      "category": "Eval coverage",
+      "metric": "Questions with verifier check (n)",
+      "value": 96.0,
+      "scope": "Sample size"
+    },
+    {
+      "id": 48,
+      "category": "Eval coverage",
+      "metric": "Human-audited labels (n)",
+      "value": 100.0,
+      "scope": "Sample size"
+    }
+  ]
+}

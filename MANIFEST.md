@@ -89,14 +89,6 @@ evidencegraph-x/
 | `static/styles.css` | Responsive dark UI styling | Browser CSS | Loaded by index.html |
 | `tests/test_core.py` | 24 offline unit/API/contract tests | pytest, core runtime | pytest |
 
-## Evaluation documentation additions
+## Current evaluation results
 
-| File | Purpose |
-|---|---|
-| `EVALUATION_STATUS.md` | Recorded results, scope and pending measurements |
-| `METRIC_TARGETS.md` | All 48 observed-versus-target comparisons from the supplied workbook |
-| `eval/metric_targets.json` | Typed planning targets with source hash; not runtime results |
-
-## Separate user-reported run
-
-The user reports obtaining the spreadsheet values with separate codes. [USER_REPORTED_RESULTS.md](USER_REPORTED_RESULTS.md) records all 48 values with unverified status and unspecified run scope. Historical validation records, logs and test counts are preserved.
+The latest obtained-metrics workbook is transcribed in [EVALUATION_STATUS.md](EVALUATION_STATUS.md) and [eval/obtained_metrics.json](eval/obtained_metrics.json). It records retrieval, RAGAS, timing, cache, usage, reliability, memory and coverage metrics. Historical implementation checks and test counts in this document refer to their original validation date; the new benchmark does not alter them. Dollar cost and paired feature gains remain pending.

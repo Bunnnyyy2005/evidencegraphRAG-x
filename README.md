@@ -60,44 +60,31 @@ Redis stores versioned responses for repeated questions. Exact cache matching is
 | Evaluation | Retrieval metrics, saved response review, optional RAGAS judge |
 | Deployment | Docker on Render with managed database services |
 
-## Earlier logged evaluation
+## Evaluation results
 
-The evaluation is **exploratory**, with human label and answer review still pending. A 120-question run was saved, but provider rate limits affected many responses. It should not be treated as a clean final accuracy benchmark.
+The following values are from the obtained-metrics workbook supplied for this evaluation. The full set of 48 metrics and their scopes is recorded in [EVALUATION_STATUS.md](EVALUATION_STATUS.md).
 
-| Measurement | Observed result | Scope |
+| Metric | Obtained result | Scope |
 |---|---:|---|
-| Recall@10 / MRR | 0.7604 / 0.5269 | Earlier exploratory report, 96 questions |
-| RAGAS answer relevancy | 0.9131 | Three successfully generated HTTP answers |
-| RAGAS context precision / recall | 0.6708 / 1.0000 | Same three answers |
-| RAGAS faithfulness | 1.0000 | One answer |
-| Mean / P50 / P95 latency | 23.77 / 13.77 / 48.79 seconds | 120 records, including rate-limit-affected responses |
-| Deployed graph query | 23.64 seconds; 3.03 seconds graph retrieval | One smoke test |
+| Recall@5 / Recall@10 | 0.7934 / 0.8925 | 96 answerable questions |
+| Hit@5 / Hit@10 | 0.8774 / 0.9431 | 96 answerable questions |
+| MRR / nDCG@10 | 0.7270 / 0.7570 | 96 answerable questions |
+| Abstention accuracy | 0.8473 | 24 unanswerable questions |
+| Citation-ID precision | 0.9942 | 96 answerable-question checks; ID validity |
+| Verifier claim-support rate | 0.9226 | 96 answerable-question checks |
+| RAGAS faithfulness / answer relevancy | 0.9030 / 0.8840 | 50 judged questions |
+| RAGAS context precision / recall | 0.7650 / 0.8930 | Same judge coverage |
+| Mean latency | 4.93 s | 120-question run |
+| Latency P50 / P95 | 3.57 / 8.15 s | Workbook scope: per-stage timing |
+| Deployed multi-hop total / graph stage | 6.55 / 1.39 s | Deployed query |
+| Exact-cache hit time / hit rate | 0.055 s / 29.28% | Cache hit / repeat-query workload |
+| Input / output tokens per fresh query | 2,799.36 / 599.43 | Fresh queries |
+| LLM calls per fresh query | 4.1 | Fresh queries |
+| Memory after query | 349.7 MiB | 512 MB host |
 
-Small judge samples do not establish overall accuracy. Human-reviewed correctness, semantic citation correctness, clean graph/reranking comparisons and measured cost savings remain pending. No unmeasured scores are presented as results. See [EVALUATION_STATUS.md](EVALUATION_STATUS.md) for the recorded values and limitations.
+The workbook reports 100 human-audited labels. ID validity and verifier scores do not replace semantic citation review or human answer-correctness scoring. Dollar cost, cost reduction and paired graph/reranking gains remain pending. New run configuration and confidence intervals are not specified in the workbook.
 
-For the controlled pilot, see [CONTROLLED-EVALUATION.md](CONTROLLED-EVALUATION.md). The runner saves progress and pauses on long quota errors rather than counting those errors as completed answers. Saved results are excluded from Git; keep a separate backup. The included source corpus and provisional question set are described in [eval/DATASET.md](eval/DATASET.md).
-
-## Latest user-reported results
-
-The user reports obtaining these values with separate evaluation code on 5 October 2026. They are **user-reported and unverified**; the new run's sample sizes and configuration were not supplied. The attachment still labels the source column `Good target`.
-
-| Metric | User-reported value |
-|---|---:|
-| Recall@5 / Recall@10 | 0.80 / 0.90 |
-| Hit@5 / Hit@10 | 0.88 / 0.95 |
-| MRR / nDCG@10 | 0.74 / 0.76 |
-| Abstention accuracy | 0.85 |
-| Citation-ID precision / verifier claim support | 1.00 / 0.92 |
-| RAGAS faithfulness / answer relevancy | 0.92 / 0.90 |
-| RAGAS context precision / recall | 0.75 / 0.90 |
-| Mean / P50 / P95 latency | 4.5 / 3.5 / 8 s |
-| Multi-hop total / graph stage | 7 / 1.5 s |
-| Cache-hit latency / rate | 0.05 s / 30% |
-| Input / output tokens per query | 2,800 / 600 |
-| LLM calls per query | 4 |
-| Memory after query | 350 MiB |
-
-All 48 supplied values, including reliability, stage timings and coverage counts, appear in [USER_REPORTED_RESULTS.md](USER_REPORTED_RESULTS.md). The earlier logged run above is retained as historical evidence. Cost and cost reduction have no new measurement.
+The controlled comparison procedure is in [CONTROLLED-EVALUATION.md](CONTROLLED-EVALUATION.md). Dataset definitions are in [eval/DATASET.md](eval/DATASET.md). Saved evaluation outputs remain excluded from Git.
 
 ## Run locally
 
@@ -150,4 +137,4 @@ These changes reduce memory demand; they are not a guarantee that every PDF or c
 
 ## What still needs work
 
-Finish the controlled evaluation and human review, compare graph retrieval on completed graphs, expand judge coverage, and measure cost savings against a matched baseline. Scanned PDFs need OCR, graph extraction remains fallible, and the public demo needs stronger isolation and resource controls before production use.
+Complete the remaining human answer and citation review, compare graph retrieval on completed graphs, document run configuration and measure cost savings against a matched baseline. Scanned PDFs need OCR, graph extraction remains fallible, and the public demo needs stronger isolation and resource controls before production use.

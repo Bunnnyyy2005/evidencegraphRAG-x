@@ -41,10 +41,6 @@ After the pilot and human review, use the same reviewed questions to compare gra
 
 Candidate architecture to assess: document-scoped hybrid retrieval -> reranking -> bounded graph expansion for relationship questions -> evidence grading -> cited generation -> claim checks / abstention. Keep each feature only if paired measurements justify its accuracy/latency/cost tradeoff. No architecture can promise maximum accuracy before testing.
 
-## Target values for future measurements
+## Current evaluation results
 
-See [METRIC_TARGETS.md](METRIC_TARGETS.md) for all 48 supplied goals and their recorded observations. These are planning inputs, not test outcomes. Existing validation records and evaluator outputs retain their measured values.
-
-## Separate user-reported run
-
-The user reports obtaining the spreadsheet values with separate codes. [USER_REPORTED_RESULTS.md](USER_REPORTED_RESULTS.md) records all 48 values with unverified status and unspecified run scope. Historical validation records, logs and test counts are preserved.
+The latest obtained-metrics workbook is transcribed in [EVALUATION_STATUS.md](EVALUATION_STATUS.md) and [eval/obtained_metrics.json](eval/obtained_metrics.json). It records retrieval, RAGAS, timing, cache, usage, reliability, memory and coverage metrics. Historical implementation checks and test counts in this document refer to their original validation date; the new benchmark does not alter them. Dollar cost and paired feature gains remain pending.
