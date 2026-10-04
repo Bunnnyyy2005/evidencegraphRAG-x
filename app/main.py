@@ -4,6 +4,7 @@ import hashlib
 import hmac
 import logging
 import re
+from threading import Lock
 from concurrent.futures import ThreadPoolExecutor
 from contextlib import asynccontextmanager
 from functools import lru_cache
@@ -35,6 +36,8 @@ class Services:
         self.jobs = ThreadPoolExecutor(max_workers=1,thread_name_prefix='ingest')
         self.graph_jobs = ThreadPoolExecutor(max_workers=1,thread_name_prefix='graph')
         self.pending = set()
+        self.graph_pending = set()
+        self.graph_lock = Lock()
 
     def submit(self, doc_id: str):
         if doc_id not in self.pending:
@@ -43,7 +46,26 @@ class Services:
             future.add_done_callback(lambda _:self.pending.discard(doc_id))
 
     def submit_graph(self, doc_id: str, chunks: list[dict]):
-        self.graph_jobs.submit(enrich_document,doc_id,chunks,self.store,self.graph)
+        with self.graph_lock:
+            if doc_id in self.graph_pending:
+                return False
+            if len(self.graph_pending) >= 5:
+                raise HTTPException(429, 'Graph queue is full; wait for current jobs.')
+            self.graph_pending.add(doc_id)
+        try:
+            doc = self.store.document(doc_id)
+            doc['stage'] = 'Searchable — graph queued'
+            self.store.save_doc(doc)
+            future = self.graph_jobs.submit(enrich_document,doc_id,chunks,self.store,self.graph)
+        except Exception:
+            self._graph_done(doc_id)
+            raise
+        future.add_done_callback(lambda _: self._graph_done(doc_id))
+        return True
+
+    def _graph_done(self, doc_id):
+        with self.graph_lock:
+            self.graph_pending.discard(doc_id)
 
 @lru_cache
 def services():
@@ -134,6 +156,20 @@ def get_doc(doc_id):
     if doc is None:
         raise HTTPException(404,'Document not found')
     return doc
+
+@app.post('/document/{doc_id}/resume-graph', dependencies=[Depends(auth)], status_code=202)
+def resume_graph(doc_id: str):
+    doc = get_doc(doc_id)
+    svc = services()
+    if not doc.get('searchable'):
+        raise HTTPException(409, 'Wait until the document is searchable.')
+    if svc.graph.driver is None:
+        raise HTTPException(409, 'Enable graph extraction and configure Neo4j first.')
+    chunks = svc.store.chunks([doc_id])
+    if not chunks:
+        raise HTTPException(409, 'Saved chunks are unavailable.')
+    queued = svc.submit_graph(doc_id, chunks)
+    return {'queued': queued, 'message': 'Graph recovery queued' if queued else 'Graph recovery already running'}
 
 @app.get('/document/{doc_id}/status',dependencies=[Depends(auth)])
 def status(doc_id: str):

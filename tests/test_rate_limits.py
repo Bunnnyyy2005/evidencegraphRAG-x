@@ -11,6 +11,7 @@ from app.verification import Answer, verify
 def store(tmp_path, monkeypatch):
     monkeypatch.setitem(Settings.model_config, 'env_file', None)
     monkeypatch.setenv('DATA_DIR', str(tmp_path))
+    monkeypatch.setenv('GRAPH_REQUEST_INTERVAL', '0')
     monkeypatch.setenv('GROQ_API_KEY', 'offline-test-key')
     monkeypatch.setenv('NEO4J_URI', '')
     settings.cache_clear()

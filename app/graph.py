@@ -47,6 +47,7 @@ class Graph:
     def __init__(self, store, llm):
         self.store, self.llm = store, llm
         self.driver = None
+        self._last_graph_request = None
         cfg = settings()
         if cfg.graph_enabled and cfg.neo4j_uri:
             self.driver = GraphDatabase.driver(cfg.neo4j_uri, auth=(cfg.neo4j_user, cfg.neo4j_password),
@@ -58,9 +59,28 @@ class Graph:
         with self.driver.session(database=settings().neo4j_database) as session:
             return session.execute_write(lambda tx: tx.run(cypher, **params).data())
 
+    def _extract_json(self, *args, **kwargs):
+        """Pace background graph calls; pause instead of waiting through long quotas."""
+        cfg = settings()
+        for attempt in range(cfg.graph_rate_limit_retries + 1):
+            if self._last_graph_request is not None:
+                delay = cfg.graph_request_interval - (time.monotonic() - self._last_graph_request)
+                if delay > 0:
+                    time.sleep(delay)
+            self._last_graph_request = time.monotonic()
+            try:
+                return self.llm.json(*args, **kwargs)
+            except RateLimitError as exc:
+                if attempt >= cfg.graph_rate_limit_retries or exc.retry_after > cfg.graph_max_retry_wait:
+                    raise
+                self.store.event('graph_retry', {'attempt': attempt + 1, 'retry_after_seconds': exc.retry_after})
+                time.sleep(exc.retry_after)
+
     def enrich(self, chunks: list[dict]) -> dict:
         if self.driver is None:
             return {'status': 'Searchable — graph not configured', 'processed': 0}
+        if not chunks:
+            raise ValueError("No saved chunks available for graph extraction")
         self.driver.verify_connectivity()
         doc_id = chunks[0]['document_id']
         self.run('CREATE CONSTRAINT eg_node_id IF NOT EXISTS FOR (n:EGNode) REQUIRE n.id IS UNIQUE')
@@ -75,9 +95,16 @@ class Graph:
         processed, failed = 0, 0
         paused = None
         chosen = chunks[:settings().graph_chunk_limit] if settings().graph_chunk_limit else chunks
+        checkpoint = digest('graph-extraction-v1:' + settings().small_model)
+        completed = {r['id'] for r in self.run(
+            'MATCH (c:Chunk) WHERE c.document_id=$doc AND c.graph_checkpoint=$checkpoint RETURN c.id AS id',
+            doc=doc_id, checkpoint=checkpoint)}
         for chunk in chosen:
+            if chunk['chunk_id'] in completed:
+                processed += 1
+                continue
             try:
-                extracted = self.llm.json('Extract explicitly supported entities and relations. '
+                extracted = self._extract_json('Extract explicitly supported entities and relations. '
                     'Each relation evidence must be an exact substring of text. Do not infer causal links.',
                     {'text': chunk['text']}, Extraction)
                 entities = {e.name.casefold().strip(): e for e in extracted.entities}
@@ -102,6 +129,9 @@ class Graph:
                     SET e.source=r.source,e.target=r.target,e.relation=r.relation,
                         e.evidence=r.evidence,e.chunk_id=$chunk,e.document_id=$doc''',
                     relations=valid, chunk=chunk['chunk_id'], doc=doc_id)
+                # Mark only after both entity and relation writes have succeeded.
+                self.run('MATCH (c:Chunk {id:$chunk}) SET c.graph_checkpoint=$checkpoint',
+                         chunk=chunk['chunk_id'], checkpoint=checkpoint)
                 processed += 1
             except RateLimitError as exc:
                 paused = exc
@@ -110,24 +140,38 @@ class Graph:
             except Exception as exc:
                 failed += 1
                 self.store.failure('entity extraction', exc)
+        # Include edges from earlier completed chunks when rebuilding communities.
+        network = nx.Graph()
+        for row in self.run('MATCH ()-[r:RELATES_TO]->() WHERE r.document_id=$doc AND r.chunk_id IN $chunks RETURN r.source AS source,r.target AS target',
+                            doc=doc_id, chunks=[c['chunk_id'] for c in chosen]):
+            network.add_edge(row['source'], row['target'])
         communities = list(nx.community.greedy_modularity_communities(network)) if network.number_of_edges() and paused is None else []
         summaries = 0
+        summary_failed = 0
         for index, members in enumerate(communities):
             try:
                 rows = self.run('''MATCH (c:Chunk)-[:MENTIONS]->(e:Entity)
                     WHERE e.document_id=$doc AND e.name IN $names
                     RETURN DISTINCT c.id AS chunk_id,c.text AS text,c.page AS page ORDER BY c.page LIMIT 16''',
                     doc=doc_id, names=list(members))
-                summary = self.llm.json('Summarize this community using only the supplied evidence. '
+                community_id = digest(doc_id + ':community-v2:' + '|'.join(sorted(members)))
+                summary_key = digest(checkpoint + json.dumps(rows, sort_keys=True))
+                saved = self.run('MATCH (g:Community {id:$id}) WHERE g.summary_checkpoint=$key RETURN g.id AS id',
+                                 id=community_id, key=summary_key)
+                if saved:
+                    summaries += 1
+                    continue
+                summary = self._extract_json('Summarize this community using only the supplied evidence. '
                     'Return supporting chunk_ids from the input.', {'evidence': rows}, Summary)
                 valid_ids = sorted(set(summary.chunk_ids) & {r['chunk_id'] for r in rows})
                 if not valid_ids:
+                    summary_failed += 1
                     continue
                 self.run('''MATCH (d:Document {id:$doc})
-                    MERGE (g:EGNode:Community {id:$id}) SET g.document_id=$doc,g.summary=$summary,g.chunk_ids=$chunks
+                    MERGE (g:EGNode:Community {id:$id}) SET g.document_id=$doc,g.summary=$summary,g.chunk_ids=$chunks,g.summary_checkpoint=$key
                     MERGE (g)-[:PART_OF]->(d)
                     WITH g UNWIND $members AS name MATCH (e:Entity {name:name,document_id:$doc})
-                    MERGE (e)-[:PART_OF]->(g)''', doc=doc_id, id=digest(doc_id+':community:'+str(index)),
+                    MERGE (e)-[:PART_OF]->(g)''', doc=doc_id, id=community_id, key=summary_key,
                     summary=summary.summary, chunks=valid_ids, members=list(members))
                 summaries += 1
             except RateLimitError as exc:
@@ -135,13 +179,14 @@ class Graph:
                 self.store.failure('community summary', exc)
                 break
             except Exception as exc:
+                summary_failed += 1
                 self.store.failure('graph traversal', exc)
         if paused is not None:
             return {'status': 'Searchable — graph paused (LLM rate limit)',
                     'processed': processed, 'failed': failed, 'total': len(chunks),
                     'communities': summaries, 'deferred': len(chosen)-processed-failed,
                     'retry_after_seconds': paused.retry_after}
-        return {'status': 'Graph ready' if processed == len(chunks) and failed == 0 else 'Graph partial',
+        return {'status': 'Graph ready' if processed == len(chunks) and failed == 0 and summary_failed == 0 else 'Graph partial',
                 'processed': processed, 'failed': failed, 'total': len(chunks), 'communities': summaries}
 
     def retrieve(self, question: str, document_ids: list[str]) -> list[dict]:

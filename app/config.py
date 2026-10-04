@@ -42,6 +42,9 @@ class Settings(BaseSettings):
     use_reranker: bool = True
     graph_enabled: bool = True
     graph_chunk_limit: int = Field(0, ge=0)
+    graph_request_interval: float = Field(60, ge=0, le=3600)
+    graph_rate_limit_retries: int = Field(3, ge=0, le=10)
+    graph_max_retry_wait: float = Field(60, ge=0, le=300)
     graph_hops: int = Field(2, ge=1, le=2)
     graph_limit: int = Field(1000, ge=10, le=10000)
     cache_threshold: float = Field(0.98, ge=0, le=1)
